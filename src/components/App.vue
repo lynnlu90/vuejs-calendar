@@ -1,21 +1,42 @@
 <template id="">
   <div class="">
-    <div class="" v-for='week in weeks'>
-      Week
-      <div class="" v-for='day in week'>{{day}}</div>
+    <div class="" id='header'>
+      <div class="">
+        <h1>Vue.js Calendar</h1>
+      </div>
+      <div class="">
+        <current-month></current-month>
+      </div>
+    </div>
+    <div class="" id='day-bar'>
+      <div class="">Mon</div>
+      <div class="">Tue</div>
+      <div class="">Wed</div>
+      <div class="">Thu</div>
+      <div class="">Fri</div>
+      <div class="">Sat</div>
+      <div class="">Sun</div>
+    </div>
+    <div class="" id='calendar'>
+      <div class="calendar-week" v-for='week in weeks'>
+        <calendar-day class="" v-for='day in week' :day='day'></calendar-day>
+      </div>
     </div>
   </div>
+
 </template>
 
 <script type="text/javascript">
+  import CalendarDay from './CalendarDay.vue';
+  import CurrentMonth from './CurrentMonth.vue';
   export default {
-    data() {
-      return {
-        month: 2,
-        year: 2017
-      };
-    },
     computed: {
+      month() {
+        return this.$store.state.currentMonth;
+      },
+      year() {
+        return this.$store.state.currentYear;
+      },
       days() {
 
         // generating all days in current month
@@ -60,6 +81,10 @@
         }
         return weeks;
       }
+    },
+    components: {
+      CalendarDay,
+      CurrentMonth
     }
   }
 </script>
