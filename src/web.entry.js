@@ -1,14 +1,6 @@
-import Vue from 'vue';
 import './style.scss';
-import store from './store';
-
-// add moment
 import moment from 'moment-timezone';
 moment.tz.setDefault('UTC');
-Object.defineProperty(Vue.prototype,'$moment',{get() {return this.$root.moment}});
-
-// components
-import App from './components/App.vue';
 
 let events = window.__INITIAL_STATE__.map(event => {
   return {
@@ -17,27 +9,8 @@ let events = window.__INITIAL_STATE__.map(event => {
   }
 });
 
-let initialState = Object.assign({},store.state,{events});
-store.replaceState(initialState);
+import VueCalendar from './entry.js';
 
-// initiate vue
-new Vue({
-  el: '#app',
-  data: {
-    moment
-  },
-  components: {
-    App
-  },
-  store,
-  render(createElement) {
-    return createElement(
-      'div',
-      {attrs:{id:'app'}},
-      [
-        createElement('app')
-      ]
-    );
-  }
-
-});
+setTimeout(function(){
+  VueCalendar(events).$mount('#app');
+},2000);
